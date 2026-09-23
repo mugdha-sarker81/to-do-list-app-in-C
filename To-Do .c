@@ -16,7 +16,7 @@ struct Task {
 #define MAX_TASKS 100
 struct Task tasks[MAX_TASKS];
 int taskCount = 0;
-int nextId = 1;   // running ID counter so deleted tasks' IDs are never reused
+int nextId = 1;   // running ID counter to save time 
 
 //============ function prototypes ============
 void dashboard();
@@ -27,12 +27,12 @@ void searchByDate();
 void completeTask();
 void deleteTask();
 void saveTasks();
-int  validateDate(const char *date);
+int  validateDate(char *date);
 void clearInputBuffer();
 
 //========= main function ===========
 int main() {
-    loadTasks();     // just load; do NOT truncate the file here
+    loadTasks(); 
     dashboard();
     return 0;
 }
@@ -46,21 +46,9 @@ void clearInputBuffer() {
     }
 }
 
-// Basic DD-MM-YYYY format check: 10 chars, digits and dashes in the right places
-int validateDate(const char *date) {
-    if (strlen(date) != 10) return 0;
-    for (int i = 0; i < 10; i++) {
-        if (i == 2 || i == 5) {
-            if (date[i] != '-') return 0;
-        } else if (!isdigit((unsigned char)date[i])) {
-            return 0;
-        }
-    }
-    int day = (date[0] - '0') * 10 + (date[1] - '0');
-    int month = (date[3] - '0') * 10 + (date[4] - '0');
-    if (day < 1 || day > 31) return 0;
-    if (month < 1 || month > 12) return 0;
-    return 1;
+// Basic DD-MM-YYYY format check(20-03-2026): 10 chars, digits and dashes in the right places
+int validateDate(char *date) {
+   
 }
 
 void loadTasks() {
@@ -73,28 +61,26 @@ void loadTasks() {
     taskCount = 0;
     int maxId = 0;
 
-    // Allow the last line to be missing a trailing newline by matching
-    // the final field up to newline OR end-of-file.
-    while (taskCount < MAX_TASKS &&
-           fscanf(fp, "%d|%19[^|]|%99[^|]|%9[^|]|%14[^\n]",
+    while (taskCount < MAX_TASKS &&  fscanf(fp, "%d| %19[^|]| %99[^|]| %9[^|]| %14[^\n]",
                   &tasks[taskCount].id,
                   tasks[taskCount].date,
                   tasks[taskCount].title,
                   tasks[taskCount].priority,
-                  tasks[taskCount].status) == 5) {
+                  tasks[taskCount].status) == 5)
+        {
 
-        if (tasks[taskCount].id > maxId) {
-            maxId = tasks[taskCount].id;
+            if (tasks[taskCount].id > maxId) {
+                maxId = tasks[taskCount].id;
+            }
+
+            taskCount++;
+
+            // consume the newline (or stop at EOF) between records
+            int c = fgetc(fp);
+            while (c != '\n' && c != EOF) {
+                c = fgetc(fp);
+            }
         }
-
-        taskCount++;
-
-        // consume the newline (or stop at EOF) between records
-        int c = fgetc(fp);
-        while (c != '\n' && c != EOF) {
-            c = fgetc(fp);
-        }
-    }
 
     fclose(fp);
     nextId = maxId + 1;
@@ -108,38 +94,9 @@ void addTask() {
     }
 
     struct Task newTask;
+    newTask.id = nextId;   
 
-    newTask.id = nextId;   // always unique, never reused after deletion
-
-    char dateBuf[20];
-    do {
-        printf("Enter date (DD-MM-YYYY): ");
-        scanf(" %19[^\n]", dateBuf);
-        if (!validateDate(dateBuf)) {
-            printf("Invalid date format. Please use DD-MM-YYYY.\n");
-        }
-    } while (!validateDate(dateBuf));
-    strcpy(newTask.date, dateBuf);
-
-    printf("Enter task: ");
-    scanf(" %99[^\n]", newTask.title);
-
-    char priorityBuf[10];
-    do {
-        printf("Enter priority (High/Medium/Low): ");
-        scanf(" %9[^\n]", priorityBuf);
-        if (strcmp(priorityBuf, "High") != 0 &&
-            strcmp(priorityBuf, "Medium") != 0 &&
-            strcmp(priorityBuf, "Low") != 0) {
-            printf("Please enter exactly: High, Medium, or Low.\n");
-        }
-    } while (strcmp(priorityBuf, "High") != 0 &&
-             strcmp(priorityBuf, "Medium") != 0 &&
-             strcmp(priorityBuf, "Low") != 0);
-    strcpy(newTask.priority, priorityBuf);
-
-    strcpy(newTask.status, "Pending");
-
+    //==================== work pendig ================
     tasks[taskCount] = newTask;
     taskCount++;
     nextId++;
@@ -155,15 +112,7 @@ void viewTasks() {
         printf("No tasks available.\n");
         return;
     }
-
-    for (int i = 0; i < taskCount; i++) {
-
-        printf("\nID: %d\n", tasks[i].id);
-        printf("Date: %s\n", tasks[i].date);
-        printf("Task: %s\n", tasks[i].title);
-        printf("Priority: %s\n", tasks[i].priority);
-        printf("Status: %s\n", tasks[i].status);
-    }
+    searchByDate();
 }
 
 void searchByDate() {
@@ -176,14 +125,15 @@ void searchByDate() {
 
     printf("\nTasks for %s:\n", searchDate);
 
-    for (int i = 0; i < taskCount; i++) {
+   
+    for (int i = 0; i < taskCount; i++) {                       //  show all tasks for this date
 
         if (strcmp(tasks[i].date, searchDate) == 0) {
 
-            printf("\nID: %d\n", tasks[i].id);
-            printf("Task: %s\n", tasks[i].title);
-            printf("Priority: %s\n", tasks[i].priority);
-            printf("Status: %s\n", tasks[i].status);
+            printf("\n %d | ", tasks[i].id);
+            printf(" %s | ", tasks[i].title);
+            printf("Priority: %s | ", tasks[i].priority);
+            printf("Status: %s | ", tasks[i].status);
 
             found = 1;
         }
