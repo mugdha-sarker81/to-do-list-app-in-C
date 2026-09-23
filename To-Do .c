@@ -17,6 +17,7 @@ struct Task tasks[MAX_TASKS];
 int taskCount = 0;
 int nextId = 1;
 
+void clearScreen();
 void dashboard();
 void loadTasks();
 void saveTasks();
@@ -66,8 +67,8 @@ long dateToKey(const char *date){
 int cmpByDate(const void *a, const void *b){
     const struct Task *ta = (const struct Task *)a;
     const struct Task *tb = (const struct Task *)b;
-    long ka = dateToSortableKey(ta->date);
-    long kb = dateToSortableKey(tb->date);
+    long ka = dateToKey(ta->date);
+    long kb = dateToKey(tb->date);
     if (ka != kb) return (ka < kb) ? -1 : 1;
     return ta->id - tb->id;
 }
@@ -110,6 +111,7 @@ void saveTasks(){
 }
 
 void addTask() {
+    clearScreen();
     if (taskCount >= MAX_TASKS) {
         printf("Task limit reached.\n");
         return;
@@ -145,6 +147,7 @@ void addTask() {
 }
 
 void viewTasks() {
+    clearScreen();
     int found = 0;
     for (int i = 0; i < taskCount; i++) {
         if (!strcmp(tasks[i].status, "Pending")) {
@@ -168,6 +171,7 @@ void searchByDate() {
         return;
     }
 
+    clearScreen();
     printf("\n=======Tasks for %s:=========\n\n", date);
     for (int i=0;i<taskCount;i++) {
         if (!strcmp(tasks[i].date, date)) {
@@ -225,6 +229,7 @@ void deleteTask() {
 void dashboard() {
     int choice;
     while(1){
+
         printf("\n=====================================\n");
         printf("            TASK MANAGER\n");
         printf("=====================================\n");
@@ -257,3 +262,9 @@ void dashboard() {
         }
     }
 }
+
+void clearScreen()
+{
+    system("cls");
+}
+
