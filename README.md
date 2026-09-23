@@ -82,9 +82,29 @@ Enter choice:
                          │      Page       │
                          └─────────────────┘
 ```
+```data array
+tasks[0]
+ ├── id       = 1
+ ├── date     = "20-09-2026"
+ ├── title    = "C Project"
+ ├── priority = "High"
+ └── status   = "Pending"
 
+tasks[1]
+ ├── id       = 2
+ ├── date     = "20-09-2026"
+ ├── title    = "Lab Report"
+ ├── priority = "Medium"
+ └── status   = "Done"
+
+tasks[2]
+ ├── id       = 3
+ ├── date     = "20-09-2026"
+ ├── title    = "DSA Assignment"
+ ├── priority = "High"
+ └── status   = "Pending"
 ### How It Works
-
+```
 1. **Dashboard** – The user can add, view, complete, or search tasks.
 2. **Search Date** – The user enters a date in `DD-MM-YYYY` format.
 3. **Date Page** – All tasks for that date are displayed with their current status.
