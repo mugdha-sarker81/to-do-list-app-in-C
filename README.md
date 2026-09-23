@@ -38,3 +38,18 @@
                            saveTasks()
                                  ↓
                          Refreshed Page
+
+
+
+
+
+================================
+          TASK MANAGER
+================================
+
+1. Add Task
+2. View Tasks
+3. Search a Date
+4. Exit
+
+Enter choice:
