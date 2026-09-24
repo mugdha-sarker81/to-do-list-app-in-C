@@ -179,7 +179,6 @@ void viewTasks() {
         }
     }
     if (!found) printf("\nNo unfinished tasks.\n");
-    askuser();
 }
 
 void searchByDate() {
@@ -229,7 +228,7 @@ void completeTask() {
 
 void deleteTask() {
     int id;
-    printf("Enter task ID: ");
+    printf("\nEnter task ID: ");
     if (scanf("%d", &id) != 1) {
         printf("Invalid input.\n");
         clearInputBuffer();
@@ -278,7 +277,21 @@ void dashboard() {
             case 2: viewTasks(); break;
             case 3: searchByDate(); break;
             case 4: completeTask(); break;
-            case 5: deleteTask(); break;
+            case 5: {
+                        viewTasks();
+                        deleteTask();
+                        printf("\n=========back to dashboard (press 5): ");
+                        while (1)
+                        {
+                            int choice; scanf("%d",&choice);
+                            switch (choice)
+                            {
+                            case 5: dashboard(); break;
+                            default: printf("\nInvalid choice! Please press '5' again: "); break;
+                            }
+                        }
+                        break;
+                    }
             case 6:
                 printf("\nThank you for using Task Manager!\n");
                 exit(0);
