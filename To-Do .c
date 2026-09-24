@@ -15,7 +15,7 @@ struct habit{
     int id;
     char title[100];
     char time[7];
-    char status[15];
+    char ampm[6];
 };
 
 #define MAX_TASKS 1000000
@@ -23,7 +23,20 @@ struct habit{
 struct Task tasks[MAX_TASKS];
 int taskCount = 0;
 int nextId = 1;
+int habitid =1;
 
+
+//=======functions for daily habit ,i will work on it letter======
+void loadhabit();
+void addhabit();
+void finishtask();
+void viewhabits();
+void deletehabit();
+void sortbytime();
+void timetokey();
+void validtime();
+
+//=============
 void askuser();
 void clearScreen();
 void dashboard();
@@ -34,7 +47,7 @@ void viewTasks();
 void searchByDate();
 void completeTask();
 void deleteTask();
-int validateDate(char *date);
+int validDate(char *date);
 void clearInputBuffer();
 int cmpByDate(const void *a, const void *b);
 long dateToKey(const char *date);
@@ -50,7 +63,7 @@ void clearInputBuffer(){
     while((c=getchar()) !='\n' && c!=EOF);
 }
 
-int validateDate(char *date){
+int validDate(char *date){
     if(strlen(date) != 10) return 0;
     if(date[2] !='-' || date[5] !='-') return 0;
 
@@ -131,9 +144,9 @@ void addTask() {
     do{
         printf("Enter date (DD-MM-YYYY): ");
         scanf("%19s", tmp.date);
-        if (!validateDate(tmp.date))
+        if (!validDate(tmp.date))
             printf("Invalid date. Please use DD-MM-YYYY.\n");
-    } while (!validateDate(tmp.date));
+    } while (!validDate(tmp.date));
 
     clearInputBuffer();
 
@@ -175,7 +188,7 @@ void searchByDate() {
 
     printf("Enter date (DD-MM-YYYY): ");
     scanf("%19s", date);
-    if (!validateDate(date)) {
+    if (!validDate(date)) {
         printf("Invalid date format.\n");
         return;
     }
@@ -190,7 +203,7 @@ void searchByDate() {
             found = 1;
         }
     }
-    if(!found) printf("No task found for this date.\n");
+    if(!found) printf("[]No task found for this date.\n");
     askuser();
 }
 
@@ -308,3 +321,8 @@ void askuser(){
         }
     }
 }
+
+
+
+
+
