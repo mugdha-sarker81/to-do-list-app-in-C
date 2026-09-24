@@ -11,12 +11,20 @@ struct Task {
     char status[15];
 };
 
+struct habit{
+    int id;
+    char title[100];
+    char time[7];
+    char status[15];
+};
+
 #define MAX_TASKS 1000000
 
 struct Task tasks[MAX_TASKS];
 int taskCount = 0;
 int nextId = 1;
 
+void askuser();
 void clearScreen();
 void dashboard();
 void loadTasks();
@@ -81,9 +89,9 @@ void loadTasks(){
     nextId = 1;
     struct Task tmp;
 
-    while (taskCount < MAX_TASKS &&
-           fscanf(fp, "%d|%19[^|]|%99[^|]|%9[^|]|%14[^\n]",
-                  &tmp.id, tmp.date, tmp.title, tmp.priority, tmp.status) == 5) {
+    while(taskCount < MAX_TASKS && fscanf(fp, "%d|%19[^|]|%99[^|]|%9[^|]|%14[^\n]",
+                  &tmp.id, tmp.date, tmp.title, tmp.priority, tmp.status) == 5)
+    {
         int c = fgetc(fp);
         if (c != '\n' && c != EOF) ungetc(c, fp);
 
@@ -158,6 +166,7 @@ void viewTasks() {
         }
     }
     if (!found) printf("\nNo unfinished tasks.\n");
+    askuser();
 }
 
 void searchByDate() {
@@ -182,6 +191,7 @@ void searchByDate() {
         }
     }
     if(!found) printf("No task found for this date.\n");
+    askuser();
 }
 
 void completeTask() {
@@ -227,6 +237,8 @@ void deleteTask() {
 }
 
 void dashboard() {
+
+    clearScreen();
     int choice;
     while(1){
 
@@ -236,7 +248,7 @@ void dashboard() {
         printf("1. Add Task\n");
         printf("2. View All Tasks\n");
         printf("3. Search Task by Date\n");
-        printf("4. Complete Task\n");
+        printf("4. Mark a Task done\n");
         printf("5. Delete Task\n");
         printf("6. Exit\n");
         printf("=====================================\n");
@@ -256,7 +268,7 @@ void dashboard() {
             case 5: deleteTask(); break;
             case 6:
                 printf("\nThank you for using Task Manager!\n");
-                return;
+                exit(0);
             default:
                 printf("Invalid choice! Please try again.\n");
         }
@@ -267,4 +279,32 @@ void clearScreen()
 {
     system("cls");
 }
+void askuser(){
 
+    int choice;
+    while(1){
+        printf("\n=====================================\n");
+        printf("            want to customize ?\n");
+        printf("=====================================\n");
+        printf("1. Add Task\n");
+        printf("2. Mark a Task done\n");
+        printf("3. Delete Task\n");
+        printf("4. back to dashboard\n");
+        printf("=====================================\n");
+        printf("Enter your choice: ");
+
+        if (scanf("%d", &choice) != 1) {
+            printf("Invalid input! Please enter a number.\n");
+            clearInputBuffer();
+            continue;
+        }
+        switch(choice) {
+            case 1: addTask(); break;
+            case 2: completeTask(); break;
+            case 3: deleteTask(); break;
+            case 4: dashboard(); break;
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    }
+}
