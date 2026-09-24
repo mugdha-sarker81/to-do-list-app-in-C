@@ -164,7 +164,7 @@ void addTask() {
     strcpy(tmp.status, "Pending");
     tasks[taskCount++] = tmp;
     saveTasks();
-    printf("Task added successfully!\n");
+    printf("\nTask added successfully!\n");
 }
 
 void viewTasks() {
@@ -219,7 +219,7 @@ void completeTask() {
         if (tasks[i].id == id) {
             strcpy(tasks[i].status, "Done");
             saveTasks();
-            printf("Task completed.\n");
+            printf("Task marked as completed.\n");
             return;
         }
     }
@@ -258,7 +258,7 @@ void dashboard() {
         printf("            TASK MANAGER\n");
         printf("=====================================\n");
         printf("1. Add Task\n");
-        printf("2. View All Tasks\n");
+        printf("2. View All pending Tasks\n");
         printf("3. Search Task by Date\n");
         printf("4. Mark a Task done\n");
         printf("5. Delete Task\n");
@@ -276,7 +276,21 @@ void dashboard() {
             case 1: addTask(); break;
             case 2: viewTasks(); break;
             case 3: searchByDate(); break;
-            case 4: completeTask(); break;
+            case 4: {
+                        viewTasks();
+                        completeTask();
+                        printf("\n=========back to dashboard (press 5): ");
+                        while (1)
+                        {
+                            int choice; scanf("%d",&choice);
+                            switch (choice)
+                            {
+                            case 5: dashboard(); break;
+                            default: printf("\nInvalid choice! Please press '5' again: "); break;
+                            }
+                        } 
+                        break;
+                    }
             case 5: {
                         viewTasks();
                         deleteTask();
