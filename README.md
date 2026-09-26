@@ -37,6 +37,7 @@ gcc main.c habits.c calendar.c -o todo
 ./todo
 
 
+```
 How the App Works
 After running, you will see the main menu:
 text1. Add Task
