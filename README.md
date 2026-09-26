@@ -48,10 +48,12 @@ calendar.c / .h → Calendar view
 git clone https://github.com/mugdha-sarker81/to-do-list-app-in-C.git
 cd to-do-list-app-in-C
 
-gcc main.c tasks.c habits.c calendar.c -o todo
-./todo
-
+make
+make run
 ```
+
+To pass command-line options through `make`, use `make run ARGS="--help"`.
+You can also compile directly with `gcc main.c tasks.c habits.c calendar.c -o todo`.
 **Command-line Options**
 ```
 ./todo --help              # Show help
@@ -87,7 +89,6 @@ tasks.txt – stores all tasks
 habits.txt – stores habits
 habit_log.txt – stores daily habit completion logs
 ```
-
 
 
 
