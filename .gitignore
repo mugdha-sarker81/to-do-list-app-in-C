@@ -1,0 +1,9 @@
+*.o
+*.exe
+todo
+todo.exe
+tasks.txt
+habits.txt
+habit_log.txt
+.DS_Store
+*.out
