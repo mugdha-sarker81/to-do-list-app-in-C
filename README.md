@@ -1,121 +1,20 @@
-```markdown
-# Task Manager
+Project Title
 
-### Dashboard
+Task Manager & Daily Habit Tracker
 
-```
-=====================================
-            TASK MANAGER
-=====================================
-1. Add Task
-2. View All pending Tasks
-3. Search Task by Date
-4. Mark a Task done
-5. Delete Task
-6. Exit
-=====================================
-Enter your choice:
-```
+Short Description:
+A menu-driven **C-based Task and Habit Management System** that allows users to manage tasks, track daily habits, monitor progress, and save records using file handling. An upgraded **Calendar/Task View** will organize tasks by date for easier daily planning.
 
-### Date View (Search by Date)
-
-```
-=======Tasks for 20-09-2026:=========
-
-1 | C Project | Priority: High | Status: Pending
-2 | Lab Report | Priority: Medium | Status: Done
-3 | DSA Assignment | Priority: High | Status: Pending
-
-=====================================
-            want to customize ?
-=====================================
-1. Add Task
-2. Mark a Task done
-3. Delete Task
-4. back to dashboard
-=====================================
-Enter your choice:
-```
-
-### Task Manager Flow
-
-```
-                    ┌──────────────┐
-                    │  DASHBOARD   │
-                    └──────┬───────┘
-                           │
-        ┌──────────┬───────┼──────────┬──────────┬──────────┐
-        ↓          ↓       ↓          ↓          ↓          ↓
-    Add Task   View All  Search     Mark Task  Delete     Exit
-               Pending   by Date    as Done     Task
-                          │
-                          ↓
-                  ┌──────────────┐
-                  │ Search Date  │
-                  │ DD-MM-YYYY   │
-                  └──────┬───────┘
-                         ↓
-                  ┌──────────────┐
-                  │  DATE PAGE   │
-                  │ 20-09-2026   │
-                  └──────┬───────┘
-                         ↓
-             ┌─────────────────────────┐
-             │ Tasks on this date      │
-             ├─────────────────────────┤
-             │ 1. C Project | Pending  │
-             │ 2. Lab Report | Done    │
-             │ 3. DSA Assignment       │
-             └──────────┬──────────────┘
-                        ↓
-               ┌────────────────┐
-               │ 1. Add Task    │
-               │ 2. Mark Done   │
-               │ 3. Delete      │
-               │ 4. Back        │
-               └───────┬────────┘
-                       ↓
-                Modify tasks[]
-                       ↓
-                  saveTasks()
-                       ↓
-             ┌─────────────────┐
-             │ Refreshed Date  │
-             │      Page       │
-             └─────────────────┘
-```
-
-### Task Structure
-
-```
-tasks[0]
- ├── id       = 1
- ├── date     = "20-09-2026"
- ├── title    = "C Project"
- ├── priority = "High"
- └── status   = "Pending"
-
-tasks[1]
- ├── id       = 2
- ├── date     = "20-09-2026"
- ├── title    = "Lab Report"
- ├── priority = "Medium"
- └── status   = "Done"
-
-tasks[2]
- ├── id       = 3
- ├── date     = "20-09-2026"
- ├── title    = "DSA Assignment"
- ├── priority = "High"
- └── status   = "Pending"
-```
-
-### How It Works
-
-1. **Dashboard** – Add, view pending, search by date, mark done, or delete tasks.
-2. **Search Date** – Enter a date in DD-MM-YYYY format.
-3. **Date Page** – All tasks for that date are shown with status and priority.
-4. **Task Management** – From the date page: add, mark done, or delete tasks.
-5. **Save Changes** – Modified tasks are saved with `saveTasks()`.
-6. **Refresh** – The date page updates to show the latest list.
-```
+How the Project Covers Lab Topics:
+Variables & Data Types: Task IDs, dates, priorities, statuses, habit times, streaks, and percentages are stored using int and char variables throughout.
+Arrays: tasks[], habits[], and logs[] arrays store all task, habit, and habit-log records in memory.
+Strings/Character Arrays: Task titles, dates, priorities, statuses, habit names, and time strings (HH:MM) are handled with char arrays and string functions (strcmp, strcpy, strcspn, sscanf).
+Structures: struct Task, Habit, and HabitLog group related fields (e.g., a task's date, title, priority, and status) into single records.
+Functions: The program is broken into many user-defined functions — addTask(), viewTasks(), searchByDate(), completeTask(), deleteTask(), addHabit(), toggleHabit(), showPerformance(), etc. — each handling one responsibility.
+Loops: for and while loops drive the main dashboard/habit-board menus, iterate over tasks/habits/logs when searching or displaying, and control input re-prompting until valid data is entered.
+Conditional Statements & Switch-Case: if-else validates dates, times, and priorities; switch statements power the main dashboard menu and the habit-board sub-menu.
+File Handling: tasks.txt, habits.txt, and habit_log.txt are read with fscanf/fopen and written with fprintf, so data survives after the program closes.
+Sorting: qsort() with a custom comparator (cmpByDate) sorts tasks chronologically; a manual bubble sort (sortHabitsByTime) keeps habits ordered by scheduled time.
+Date & Time Handling (time.h): time_t, struct tm, mktime(), localtime(), and strftime() compute today's date, convert between date strings and time values, and calculate habit streaks day-by-day.
+Macros (#define): Constants like MAX_TASKS, MAX_HABITS, MAX_LOGS, TREND_DAYS, and IGNORED_THRESHOLD define fixed limits and thresholds used across the program.
+Input Validation: Custom functions (validDate, validTime) check user input format before accepting it, preventing corrupted records.
