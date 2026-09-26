@@ -3,6 +3,7 @@
 #include<string.h>
 #include<ctype.h>
 #include<time.h>
+#include "calendar.h"
 
 struct Task {
     int id;
@@ -293,7 +294,8 @@ void dashboard() {
         printf("4. Mark a Task done\n");
         printf("5. Delete Task\n");
         printf("6. Daily Habits dashboard\n");
-        printf("7. Exit\n");
+        printf("7. Show callender\n");
+        printf("8. Exit\n");
         printf("=====================================\n");
         printf("Enter your choice: ");
 
@@ -338,7 +340,24 @@ void dashboard() {
                         break;
                     }
             case 6: { habitboard(); break;}
-            case 7:
+            case 7: {
+                        int year, month;
+                        printf("Enter month and year (e.g. 9 2026): ");
+                        scanf("%d %d", &month, &year);
+
+                        if (month < 1 || month > 12) {
+                            printf("Invalid month!\n");
+                        } else {
+                            clearScreen();
+                            showCalendar(year, month);
+                            printf("\n\nPress Enter to go back to dashboard...");
+                            clearInputBuffer();
+                            getchar();
+                            clearScreen();
+                        }
+                        break;
+                    }
+            case 8:
                 printf("\nThank you for using Task Manager!\n");
                 exit(0);
             default:
