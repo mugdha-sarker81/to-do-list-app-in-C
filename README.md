@@ -7,16 +7,18 @@ An upgraded **Calendar/Task View** organizes tasks by date for easier daily plan
 
 ## CSE-1102 Lab Contents Used in the Project
 
-- **Basic Operators**: Used for task IDs, calculations, comparisons, and performance percentages.
-- **Arrays**: Used to store multiple tasks, habits, and habit logs.
-- **Strings & String Functions**: Used for task titles, dates, priorities, statuses, habit names, and string comparison/copying.
-- **User-Defined Data Types**: `struct` and `typedef` are used to create task, habit, and habit-log records.
-- **Pointers**: Used for passing data, accessing structures, arrays, and file operations.
-- **File Handling**: Used to save and load tasks, habits, and habit records permanently.
-- **Command-Line Parameters**: Used to provide startup options or configuration when launching the program.
-- **Multiple C Files**: The project is divided into multiple `.c` and `.h` files, with different modules working together.
-- **Dynamic Memory Allocation**: `malloc()` / `free()` are used to dynamically manage tasks and other records when required.
-- **Extra Functions/Libraries**: Additional standard C libraries and built-in functions are used for date and time management, task sorting, string processing, input validation, file data processing, screen control, and safe program termination.
+- **Basic Operators:** Used for task IDs, calculations, comparisons, and performance percentages.
+- **Arrays:** Used to store multiple tasks, habits, and habit logs.
+- **Strings & String Functions:** Used for task titles, dates, priorities, statuses, habit names, and string comparison/copying.
+- **User-Defined Data Types:** `struct` and `typedef` are used to create task, habit, and habit-log records.
+- **Pointers:** Used for passing data, accessing structures, arrays, and file operations.
+- **File Handling:** Used to save and load tasks, habits, and habit records permanently.
+- **Command-Line Parameters:** Used to provide startup options or configuration when launching the program.
+- **User-Defined Functions:** Separate functions are used for task, habit, calendar, and other operations, and are called through the program's menu flow.
+- **Multiple C Files:** The project is divided into multiple `.c` and `.h` files, with different modules working together.
+- **Makefile:** A Makefile is used to compile and link the project's multiple C source files efficiently.
+- **Dynamic Memory Allocation:** `malloc()` / `free()` are used to dynamically manage tasks and other records when required.
+- **Extra Functions/Libraries:** Additional standard C libraries and built-in functions are used for date and time management, task sorting, string processing, input validation, file data processing, screen control, and safe program termination.
 
 ---
 
