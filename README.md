@@ -38,20 +38,31 @@ gcc main.c habits.c calendar.c -o todo
 
 
 ```
-How the App Works
-After running, you will see the main menu:
-text1. Add Task
-2. View All pending Tasks
-3. Search Task by Date
-4. Mark a Task done
-5. Delete Task
-6. Daily Habits dashboard
-7. Show Calendar
-8. Exit
-Calendar Colors
+**How the App Works**
 
-Red    → High priority pending tasks
-Yellow → Medium priority
-Green  → Low priority
+After running, you will see the main menu:
+
+text 1. Add Task
+
+2. View All pending Tasks
+
+3. Search Task by Date
+
+4. Mark a Task done
+
+5. Delete Task
+
+6. Daily Habits dashboard
+
+7. Show Calendar
+
+8. Exit
+
+
+**Calendar Colors**
+
+**Red**    → High priority pending tasks
+**Yellow** → Medium priority
+**Green**  → Low priority
 
 
