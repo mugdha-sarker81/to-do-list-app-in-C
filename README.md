@@ -1,8 +1,8 @@
 Project Title
 
-Task Manager & Daily Habit Tracker
+<b>Task Manager & Daily Habit Tracker</b>
 
-Short Description:
+<u>Short Description:</u>
 A menu-driven **C-based Task and Habit Management System** that allows users to manage tasks, track daily habits, monitor progress, and save records using file handling. An upgraded **Calendar/Task View** will organize tasks by date for easier daily planning.
 
 CSE-1102 Lab Contents Used in the Project
