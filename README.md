@@ -32,11 +32,11 @@ git clone https://github.com/mugdha-sarker81/to-do-list-app-in-C.git
 
 cd to-do-list-app-in-C
 
-gcc main.c habits.c calendar.c -o todo
+gcc main.c tasks.c habits.c calendar.c -o todo
 
 ./todo
 
-
+```
 How the App Works
 After running, you will see the main menu:
 text1. Add Task
