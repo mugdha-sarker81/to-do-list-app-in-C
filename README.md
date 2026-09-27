@@ -54,6 +54,23 @@ make run
 
 To pass command-line options through `make`, use `make run ARGS="--help"`.
 You can also compile directly with `gcc main.c tasks.c habits.c calendar.c -o todo`.
+
+### Windows (PowerShell)
+
+PowerShell does not include `make`. Install GNU Make and GCC (for example, with MSYS2), or use `mingw32-make` if that is the command provided by your MinGW installation:
+
+```powershell
+mingw32-make
+mingw32-make run
+```
+
+If GCC is installed but Make is not, build and run directly:
+
+```powershell
+gcc main.c tasks.c habits.c calendar.c -o todo.exe
+.\todo.exe
+```
+
 **Command-line Options**
 ```
 ./todo --help              # Show help
@@ -89,6 +106,5 @@ tasks.txt – stores all tasks
 habits.txt – stores habits
 habit_log.txt – stores daily habit completion logs
 ```
-
 
 
