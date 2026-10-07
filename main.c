@@ -4,6 +4,7 @@
 #include "tasks.h"
 #include "habits.h"
 #include "calendar.h"
+#include "export.h"
 
 void clearScreen();
 void clearInputBuffer();
