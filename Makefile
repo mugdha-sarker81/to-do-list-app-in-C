@@ -1,22 +1,32 @@
 CC = gcc
-CFLAGS ?= -std=c11 -Wall -Wextra
+# gnu11 (not c11) because export.c uses raw string literals R"(...)"
+CFLAGS ?= -std=gnu11 -Wall -Wextra
+
 ifeq ($(OS),Windows_NT)
 TARGET = todo.exe
+RUN = $(TARGET)
 else
 TARGET = todo
+RUN = ./$(TARGET)
 endif
-SOURCES = main.c tasks.c habits.c calendar.c
-HEADERS = tasks.h habits.h calendar.h
+
+SOURCES = main.c tasks.c habits.c calendar.c export.c
+OBJECTS = $(SOURCES:.c=.o)
+HEADERS = tasks.h habits.h calendar.h export.h
 
 .PHONY: all run clean
 
 all: $(TARGET)
 
-$(TARGET): $(SOURCES) $(HEADERS)
-	$(CC) $(CFLAGS) $(SOURCES) -o $(TARGET)
+$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET)
+
+# Rebuild an object file when its .c file or any header changes
+%.o: %.c $(HEADERS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 run: $(TARGET)
-	./$(TARGET) $(ARGS)
+	$(RUN) $(ARGS)
 
 clean:
-	$(RM) todo todo.exe
+	$(RM) todo todo.exe $(OBJECTS)
