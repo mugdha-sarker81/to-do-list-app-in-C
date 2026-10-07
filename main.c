@@ -98,7 +98,8 @@ void dashboard() {
         printf("5. Delete Task\n");
         printf("6. Daily Habits dashboard\n");
         printf("7. Show Calendar\n");
-        printf("8. Exit\n");
+        printf("8. Export tasks to HTML\n");
+        printf("9. Exit\n");
         printf("=====================================\n");
         printf("Enter your choice: ");
 
@@ -153,6 +154,12 @@ void dashboard() {
                 break;
             }
             case 8:
+                exportTasksToHTML();
+                printf("Press Enter to continue...");
+                clearInputBuffer();
+                getchar();
+                break;
+            case 9:
                 printf("\nThank you for using Task Manager!\n");
                 free(tasks);
                 exit(0);
