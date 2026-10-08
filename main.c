@@ -9,19 +9,44 @@
 void clearScreen();
 void clearInputBuffer();
 void dashboard();
-
+void printTutorial();
 
 int main(int argc, char *argv[]) {
 
     if (argc > 1) {
         if (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0) {
-            printf("Task Manager & Daily Habit Tracker\n");
-            printf("Usage: ./todo [option]\n\n");
-            printf("Options:\n");
+
+            printf("\n============================================================\n");
+            printf("              TASK MANAGER & HABIT TRACKER\n");
+            printf("============================================================\n\n");
+            printf("Usage:  ");
+            printf("  ./todo [option]\n\n");
+
+            printf("Commands:\n");
             printf("  -h, --help              Show this help message\n");
-            printf("  --clear                 Clear all saved data\n");
-            printf("  --date DD-MM-YYYY       Show tasks of a specific date\n");
-            printf("  --habit                 Open Daily Habits dashboard\n");
+            printf("  --clear                 Clear all saved tasks and habits\n");
+            printf("  --date DD-MM-YYYY       View tasks for a specific date\n");
+            printf("  --habit                 Open the Daily Habits dashboard\n");
+            printf("  --data                  Show where your data is saved\n");
+            printf("  --tut                   Open the quick tutorial\n\n");
+
+            printf("Tip: Run './todo --tut' if you're using the app for the first time.\n");
+            printf("============================================================\n\n");
+
+            return 0;
+        }
+        else if (strcmp(argv[1], "--tut") == 0) {
+            printTutorial();
+            return 0;
+        }
+        else if (strcmp(argv[1], "--data") == 0) {
+            printf("------------------------------------------------------------\n");
+            printf("             YOUR DATA\n");
+            printf("------------------------------------------------------------\n");
+            printf(" Your progress is automatically saved in:\n");
+            printf(" • tasks.txt → Your tasks\n");
+            printf(" • habits.txt → Your habits\n");
+            printf(" • habit_log.txt → Your habit history\n\n");
             return 0;
         }
         else if (strcmp(argv[1], "--clear") == 0) {
@@ -178,3 +203,39 @@ void clearScreen(){
     system("cls");
 }
 
+void printTutorial() {
+    printf("\n");
+    printf("============================================================\n"); 
+    printf(" TASK MANAGER & HABIT TRACKER - GUIDE\n"); 
+    printf("============================================================\n\n"); 
+    printf("Welcome! \n"); 
+    printf("This app helps you organize your daily tasks and habits.\n"); 
+    printf("Choose an option from the menu and follow the instructions.\n\n"); 
+    printf("------------------------------------------------------------\n"); 
+    printf("  TASKS\n"); 
+    printf("------------------------------------------------------------\n"); 
+    printf(" [1] Add Task\n"); 
+    printf(" \tCreate a new task with a date, title, and priority.\n"); 
+    printf(" [2] View Tasks\n"); 
+    printf(" \tSee all your unfinished tasks in one place.\n"); 
+    printf(" [3] Find Tasks by Date\n"); 
+    printf(" \tEnter a date to see what you need to do that day.\n"); 
+    printf(" [4] Complete a Task\n"); 
+    printf(" \tFinished something? Mark it as DONE using its ID.\n"); 
+    printf(" [5] Delete a Task\n"); 
+    printf(" \tRemove a task you no longer need using its ID.\n"); 
+    printf("------------------------------------------------------------\n"); 
+    printf("  HABITS & PLANNING\n"); 
+    printf("------------------------------------------------------------\n"); 
+    printf(" [6] Habit Dashboard\n"); 
+    printf(" \tAdd habits and track how well you are doing today.\n"); 
+    printf(" [7] Calendar\n"); 
+    printf(" \tPick a month and year to see your task calendar.\n"); 
+    printf(" [8] Export Report\n"); 
+    printf(" \tCreate a report.html file to view your tasks in a browser.\n"); 
+    printf(" [9] Exit\n"); 
+    printf(" \tSave your progress and close the application.\n\n");
+    printf(" Tip: Start with [1] Add Task and create your first task!\n"); 
+    printf("============================================================\n");
+    return;
+}

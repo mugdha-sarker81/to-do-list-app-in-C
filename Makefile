@@ -29,4 +29,4 @@ run: $(TARGET)
 	$(RUN) $(ARGS)
 
 clean:
-	$(RM) todo todo.exe $(OBJECTS)
+	$(RM) todo todo.exe

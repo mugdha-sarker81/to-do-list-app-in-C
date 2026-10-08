@@ -1,9 +1,21 @@
+# C build artifacts
 *.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
 *.exe
-todo
-todo.exe
+*.out
+/todo
+/output/
+
+# Generated application data and reports
 tasks.txt
 habits.txt
 habit_log.txt
+/report.html
+
+# OS files
 .DS_Store
-*.out
