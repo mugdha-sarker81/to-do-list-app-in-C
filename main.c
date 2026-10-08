@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
             printf("  --clear                 Clear all saved tasks and habits\n");
             printf("  --date DD-MM-YYYY       View tasks for a specific date\n");
             printf("  --habit                 Open the Daily Habits dashboard\n");
+            printf("  --report                Generate and open the HTML task report\n");
             printf("  --data                  Show where your data is saved\n");
             printf("  --tut                   Open the quick tutorial\n\n");
 
@@ -47,6 +48,29 @@ int main(int argc, char *argv[]) {
             printf(" • tasks.txt → Your tasks\n");
             printf(" • habits.txt → Your habits\n");
             printf(" • habit_log.txt → Your habit history\n\n");
+            return 0;
+        }
+        else if (strcmp(argv[1], "--report") == 0) {
+            if (exportTasksToHTML() != 0) {
+                fprintf(stderr, "Could not generate the task report.\n");
+                return 1;
+            }
+
+            #ifdef _WIN32
+                        const char *openCommand = "start \"\" \"report.html\"";
+            #elif defined(__APPLE__)
+                        const char *openCommand = "open \"report.html\"";
+            #else
+                        const char *openCommand = "xdg-open \"report.html\"";
+            #endif
+            
+            if (system(openCommand) != 0) {
+                fprintf(stderr, "Report created, but could not open it. "
+                        "Open report.html manually.\n");
+                return 1;
+            }
+
+            printf("Report created and opened: report.html\n");
             return 0;
         }
         else if (strcmp(argv[1], "--clear") == 0) {

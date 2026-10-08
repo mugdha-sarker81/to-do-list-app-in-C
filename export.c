@@ -135,11 +135,15 @@ int exportTasksToHTML(){
 
     if (taskCount==0) {
         printf("Your tasks file is empty.\n");
-        return 0;
+        return -1;
     }
 
     else{
         FILE *exportFile = fopen("report.html", "w");
+        if (exportFile == NULL) {
+            perror("Could not create report.html");
+            return -1;
+        }
         float percent = ((float)taskDone/taskCount)*100.0;
         fprintf(exportFile, "%s\n", html_template_head);
         fprintf(exportFile, html_template_chart, percent, percent, taskCount-taskDone, taskDone);
@@ -148,7 +152,10 @@ int exportTasksToHTML(){
             else fprintf(exportFile,html_template_task_pending, tasklist[i].title, months[tasklist[i].date.month-1], tasklist[i].date.day, tasklist[i].date.year);
         }
         fprintf(exportFile,"%s", html_template_ending);
-        fclose(exportFile);
+        if (fclose(exportFile) != 0) {
+            perror("Could not finish writing report.html");
+            return -1;
+        }
     }
     return 0;
 }

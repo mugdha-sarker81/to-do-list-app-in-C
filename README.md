@@ -79,10 +79,15 @@ gcc main.c tasks.c habits.c calendar.c export.c -o todo.exe
 ./todo --help              # Show help
 ./todo --tut               # Show a quick application tutorial
 ./todo --data              # Show where your progress is saved
+./todo --report            # Generate and open the HTML task report
 ./todo --clear             # Clear all saved data
 ./todo --date DD-MM-YYYY   # Show tasks of a specific date
 ./todo --habit             # Open Daily Habits dashboard directly
 ```
+
+`--report` creates `report.html` from your saved tasks and opens it with the
+default browser (Windows, macOS, or Linux). If it cannot be opened
+automatically, open `report.html` manually from the project directory.
 
 ### Command-Line Tutorial (`--tut`)
 
