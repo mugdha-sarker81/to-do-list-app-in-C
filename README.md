@@ -1,153 +1,499 @@
 # Task Manager & Daily Habit Tracker
 
-A menu-driven **C-based Task and Habit Management System** that allows users to manage tasks, track daily habits, monitor progress, and save records using file handling.  
-An upgraded **Calendar/Task View** organizes tasks by date for easier daily planning.
+A feature-rich C application for managing daily tasks, tracking habits, reviewing progress, and planning work visually. It combines task organization, priority-based scheduling, habit streak analytics, and report generation into a single command-line productivity dashboard.
+
+This project is designed as a practical C programming exercise and also works as a real personal productivity tool for daily planning.
 
 ---
 
-## CSE-1102 Lab Contents Used in the Project
+## Overview
 
-- **Basic Operators:** Used for task IDs, calculations, comparisons, and performance percentages.
-- **Arrays:** Used to store multiple tasks, habits, and habit logs.
-- **Strings & String Functions:** Used for task titles, dates, priorities, statuses, habit names, and string comparison/copying.
-- **User-Defined Data Types:** `struct` and `typedef` are used to create task, habit, and habit-log records.
-- **Pointers:** Used for passing data, accessing structures, arrays, and file operations.
-- **File Handling:** Used to save and load tasks, habits, and habit records permanently.
-- **Command-Line Parameters:** Used to provide startup options or configuration when launching the program.
-- **User-Defined Functions:** Separate functions are used for task, habit, calendar, and other operations, and are called through the program's menu flow.
-- **Multiple C Files:** The project is divided into multiple `.c` and `.h` files, with different modules working together.
-- **Makefile:** A Makefile is used to compile and link the project's multiple C source files efficiently.
-- **Dynamic Memory Allocation:** `malloc()` / `free()` are used to dynamically manage tasks and other records when required.
-- **Extra Functions/Libraries:** Additional standard C libraries and built-in functions are used for date and time management, task sorting, string processing, input validation, file data processing, screen control, and safe program termination.
+The application provides:
 
----
+- Task creation with date and priority
+- Search and filtering by date
+- Pending-task viewing
+- Marking tasks as completed
+- Task deletion
+- Habit tracking with daily completion logs
+- Streak calculation and performance statistics
+- Calendar visualization with color-coded priority levels
+- HTML export for quick reporting and sharing
+- Persistent storage through text files
+- Command-line options for quick access and automation
 
-## Features
-
-- Add / View / Complete / Delete Tasks
-- Search tasks by date
-- Colorful Calendar view (priority-based coloring)
-- Daily Habits tracking
-- Streak counter & Performance report
-- Data saved permanently using file handling
-- Command-line arguments support
+It is built as a multi-file C project using modular code, dynamic memory, structured data, and file-based persistence.
 
 ---
 
-## Project Structure
+## Main Features
 
-main.c          → Main program + Dashboard + Command-line handling
-tasks.c / .h    → Task management module (with dynamic memory)
-habits.c / .h   → Habit tracking module
-calendar.c / .h → Calendar view
+### 1. Task Management
 
+The core of the app is the task manager.
+
+- Add a task with:
+  - date in `DD-MM-YYYY` format
+  - title
+  - priority: `High`, `Medium`, or `Low`
+  - automatic status: `Pending`
+- Each task receives a unique numeric ID automatically.
+- Tasks are stored in memory and saved permanently in `tasks.txt`.
+- Tasks can be listed in pending-state view.
+- Tasks can be searched by exact date.
+- Tasks can be marked as `Done`.
+- Tasks can be removed from the list.
+- Tasks are sorted by date, then by task ID.
+
+This makes the planner more useful for daily planning, milestone tracking, and short-term scheduling.
+
+### 2. Priority-Based Planning
+
+Each task includes a priority level:
+
+- High: critical or urgent work
+- Medium: normal priority work
+- Low: optional or flexible tasks
+
+This priority is used in the calendar display and helps the user quickly identify what needs attention soon.
+
+### 3. Search by Date
+
+The app allows the user to search all tasks scheduled for a specific date.
+
+Example:
+
+```bash
+./todo --date 26-09-2026
+```
+
+This shows every task scheduled on that date, making it easier to organize the day or review specific deadlines.
+
+### 4. Dashboard Interface
+
+The app uses a menu-driven dashboard with numbered options. The interface includes:
+
+- Add Task
+- View All Pending Tasks
+- Search Task by Date
+- Mark a Task Done
+- Delete Task
+- Daily Habits Dashboard
+- Show Calendar
+- Export Tasks to HTML
+- Exit
+
+This keeps the application easy to use in a terminal environment while still being feature-rich.
+
+### 5. Daily Habit Tracker
+
+The habit system helps users build good routines and monitor consistency.
+
+Features:
+
+- Add a habit with name and scheduled time (`HH:MM`)
+- View today’s habits
+- Toggle a habit as complete or incomplete
+- Delete habits when no longer needed
+- Track completion logs in `habit_log.txt`
+- Calculate habit completion percentage
+- Measure current streak of successful days
+- Identify neglected habits based on recent performance
+
+Habit logic includes a threshold-based completion rule:
+
+- A day is considered successful when at least 80% of habits are completed.
+- The current streak increases when consecutive days qualify.
+- Performance reporting shows recent completion rates over a configured number of days.
+
+### 6. Streak and Performance Analytics
+
+The app includes a lightweight habit analytics system that helps users monitor consistency.
+
+It tracks:
+
+- Today’s habit completion percentage
+- Current streak count
+- Short-term habit completion rate over recent days
+- Habits marked as neglected if they fall below a threshold
+
+These statistics encourage habit consistency and make the app feel like a daily progress tracker instead of just a task list.
+
+### 7. Calendar View with Color Coding
+
+The calendar module displays a month view and color-codes days with pending tasks based on task importance.
+
+Color meanings:
+
+- Red: high-priority tasks
+- Yellow: medium-priority tasks
+- Green: low-priority tasks
+- Plain: no pending tasks
+
+This visual planning aid helps users see which days are busier or more urgent at a glance.
+
+### 8. HTML Task Export
+
+The app can generate a simple HTML report from saved tasks.
+
+Command:
+
+```bash
+./todo --report
+```
+
+This creates a file named `report.html` and opens it in the default browser. The exported report includes:
+
+- task list
+- done/undone summary
+- progress chart
+- due date information
+- visual task grouping
+
+This makes it easy to view work summaries outside the terminal and share the report if needed.
+
+### 9. Data Persistence
+
+The program stores user information in local files so data remains available across sessions.
+
+Files created/used:
+
+- `tasks.txt` — stores tasks
+- `habits.txt` — stores habit definitions
+- `habit_log.txt` — stores habit completion records
+- `report.html` — generated export report
+
+This gives the project a realistic personal management tool feel, not just a demo console app.
+
+### 10. Command-Line Convenience
+
+The application supports multiple command-line operations directly from the terminal.
+
+Supported options:
+
+```bash
+./todo --help
+./todo --tut
+./todo --data
+./todo --report
+./todo --clear
+./todo --date DD-MM-YYYY
+./todo --habit
+```
+
+Examples:
+
+```bash
+./todo --help
+./todo --date 20-10-2026
+./todo --habit
+./todo --report
+```
+
+This makes the program suitable for quick runs, automation, and efficient daily usage.
 
 ---
 
-## How to Build & Run
+## Detailed Project Structure
+
+```text
+to-do-list-app-in-C/
+├── main.c            # Main application loop and command-line options
+├── tasks.c           # Task management logic
+├── tasks.h           # Task-related structures and function declarations
+├── habits.c          # Habit tracking, logs, streaks, and performance
+├── habits.h          # Habit structures and declarations
+├── calendar.c        # Monthly calendar visualization with color-coding
+├── calendar.h        # Calendar function declarations
+├── export.c          # HTML report generator
+├── export.h          # Export declarations
+├── Makefile          # Build automation
+├── README.md         # Project documentation
+├── tasks.txt         # Saved task records
+├── habits.txt        # Saved habit list
+├── habit_log.txt     # Saved habit completion records
+├── report.html       # Generated HTML report
+├── todo.exe          # Windows compiled binary (if built)
+└── .gitignore        # Git ignore file
+```
+
+---
+
+## How the App Works
+
+### Task Data Model
+
+Tasks are stored using a structure similar to:
+
+```c
+struct Task {
+    int id;
+    char date[20];
+    char title[100];
+    char priority[10];
+    char status[15];
+};
+```
+
+This stores:
+
+- a unique task ID
+- due date
+- task description/title
+- priority
+- completion state
+
+### Habit Data Model
+
+Habits are tracked using a structured record containing:
+
+- habit ID
+- habit name
+- scheduled time
+- daily completion log entries
+
+Each log entry tracks:
+
+- date
+- habit ID
+- completion state (`0` or `1`)
+
+### Input Validation
+
+The app validates key inputs before saving records:
+
+- date format must be `DD-MM-YYYY`
+- month must be between `1` and `12`
+- day must be valid for the month
+- priority must be one of `High`, `Medium`, or `Low`
+- habit time must be in `HH:MM` format
+
+This reduces invalid data and prevents broken scheduling.
+
+### File Persistence Logic
+
+The project explicitly reads and writes from text files with `fopen()`, `fscanf()`, `fprintf()`, and related C file functions.
+
+This means:
+
+- tasks are not lost when the application exits
+- habit records remain available
+- progress continues from a previous session
+- report generation works using stored data
+
+---
+
+## Build and Run Instructions
+
+### Linux/macOS
 
 ```bash
 git clone https://github.com/mugdha-sarker81/to-do-list-app-in-C.git
 cd to-do-list-app-in-C
-
 make
-make run
+./todo
 ```
 
-To pass command-line options through `make`, use `make run ARGS="--help"`.
-Use `make run ARGS="--tut"` to print a quick guide to using the application.
-You can also compile directly with `gcc main.c tasks.c habits.c calendar.c export.c -o todo`.
+Or directly:
 
-### Windows (PowerShell)
+```bash
+gcc main.c tasks.c habits.c calendar.c export.c -o todo
+./todo
+```
 
-PowerShell does not include `make`. Install GNU Make and GCC (for example, with MSYS2), or use `mingw32-make` if that is the command provided by your MinGW installation:
+### Windows with PowerShell
+
+If `make` is available:
 
 ```powershell
 mingw32-make
 mingw32-make run
 ```
 
-If GCC is installed but Make is not, build and run directly:
+If not, compile directly:
 
 ```powershell
 gcc main.c tasks.c habits.c calendar.c export.c -o todo.exe
 .\todo.exe
 ```
 
-**Command-line Options**
-```
-./todo --help              # Show help
-./todo --tut               # Show a quick application tutorial
-./todo --data              # Show where your progress is saved
-./todo --report            # Generate and open the HTML task report
-./todo --clear             # Clear all saved data
-./todo --date DD-MM-YYYY   # Show tasks of a specific date
-./todo --habit             # Open Daily Habits dashboard directly
-```
+---
 
-`--report` creates `report.html` from your saved tasks and opens it with the
-default browser (Windows, macOS, or Linux). If it cannot be opened
-automatically, open `report.html` manually from the project directory.
-
-### Command-Line Tutorial (`--tut`)
-
-Run the tutorial at any time from a terminal:
+## Command-Line Options
 
 ```bash
+./todo --help
 ./todo --tut
+./todo --data
+./todo --report
+./todo --clear
+./todo --date DD-MM-YYYY
+./todo --habit
 ```
 
-On Windows PowerShell, use:
+### Option Details
 
-```powershell
-.\todo.exe --tut
+- `--help` : show available commands
+- `--tut` : print a quick usage tutorial
+- `--data` : show where the saved data is stored
+- `--report` : generate and open the HTML task report
+- `--clear` : delete saved task and habit data
+- `--date DD-MM-YYYY` : view tasks for a specific day
+- `--habit` : jump directly into the habits dashboard
+
+---
+
+## Example User Flow
+
+### Add a task
+
+1. Start the app
+2. Select `1` from the menu
+3. Enter the date in `DD-MM-YYYY`
+4. Enter the task title
+5. Choose a priority
+6. The task is saved to `tasks.txt`
+
+### Mark a task as done
+
+1. View pending tasks
+2. Choose the task to complete
+3. Enter the task ID
+4. The task status changes to `Done`
+
+### Search tasks by date
+
+```bash
+./todo --date 25-10-2026
 ```
 
-The tutorial prints a quick guide without opening the interactive menu. To use
-the application, run `./todo` (or `.\todo.exe` on Windows) without an option,
-then choose from the main menu:
+### Update habit progress
 
-1. **Add a task:** enter its date in `DD-MM-YYYY` format, title, and priority
-   (`High`, `Medium`, or `Low`).
-2. **View or find tasks:** choose the pending-task list or search by date. You
-   can also run `./todo --date 26-09-2026` to list tasks for a date directly.
-3. **Complete or delete a task:** use its task ID when prompted.
-4. **Track habits:** open the habits dashboard to add habits and mark today's
-   habits complete. `./todo --habit` opens this dashboard directly.
-5. **Plan and export:** view a month in the calendar or export tasks to
-   `report.html`.
-6. **Exit:** choose the exit option in the main menu.
+1. Open the habit dashboard
+2. Add a habit
+3. Mark the habit complete for today
+4. View the performance and streak stats
 
-The application saves task and habit data in `tasks.txt`, `habits.txt`, and
-`habit_log.txt` in the current directory. The `--clear` option deletes those
-saved data files, so use it only when you intend to erase the saved data.
+### Generate a report
 
-### How the App Works
-After running, you will see the main menu:
-text
+```bash
+./todo --report
 ```
-1. Add Task
-2. View All pending Tasks
-3. Search Task by Date
-4. Mark a Task done
-5. Delete Task
-6. Daily Habits dashboard
-7. Show Calendar
-8. Export tasks to HTML
-9. Exit
-```
-### Calendar Colors
-```
-Color    Meaning
 
-Red      High priority pending tasks
-Yellow   Medium priority
-Green    Low priority
+This generates a visual HTML page with task progress information.
+
+---
+
+## Data File Format
+
+### tasks.txt
+
+Example:
+
+```text
+1|15-10-2026|Finish assignment|High|Pending
+2|16-10-2026|Buy groceries|Medium|Done
+3|18-10-2026|Read chapter 5|Low|Pending
 ```
-### Data Files
-The program automatically creates and uses these files:
+
+Format:
+
+```text
+id|date|title|priority|status
 ```
-tasks.txt – stores all tasks
-habits.txt – stores habits
-habit_log.txt – stores daily habit completion logs
+
+### habits.txt
+
+Example:
+
+```text
+1|Morning Run|06:30
+2|Read 20 pages|21:00
 ```
+
+Format:
+
+```text
+id|habit_name|time
+```
+
+### habit_log.txt
+
+Example:
+
+```text
+2026-10-10|1|1
+2026-10-10|2|0
+```
+
+Format:
+
+```text
+YYYY-MM-DD|habitId|completed
+```
+
+---
+
+## Feature Highlights in Summary
+
+This project is more than a simple to-do list. It includes:
+
+- Full task lifecycle management
+- Priority-based organization
+- Date search and scheduling support
+- Visual calendar planning
+- Daily habit tracking
+- Streak and performance monitoring
+- HTML report generation
+- Persistent storage
+- Multi-file modular C architecture
+- Command-line support for quick usage
+
+---
+
+## Why This Project Is Useful
+
+This project demonstrates several important C programming concepts in a practical way:
+
+- dynamic memory allocation
+- file I/O
+- string handling
+- data structures
+- sorting and searching
+- modular code design
+- menu-driven application flow
+- user input validation
+- data persistence and analytics
+
+It is suitable for:
+
+- academic C assignments
+- personal productivity tools
+- beginner-to-intermediate software engineering practice
+- learning how to build menu-driven terminal applications
+
+---
+
+## Notes
+
+- The app is optimized for terminal usage and works best in a console environment.
+- Some behavior, such as clearing the screen, uses system commands and may vary slightly across operating systems.
+- The generated HTML report is saved in the same directory as the application.
+- Use `--clear` carefully because it removes saved progress files.
+
+---
+
+## Quick Start
+
+```bash
+make
+./todo
+```
+
+Then choose from the menu and begin managing tasks and habits immediately.
+
+---
+
+## License and Usage
+
+This project is intended for educational and personal use. It can be modified and extended according to your needs.
