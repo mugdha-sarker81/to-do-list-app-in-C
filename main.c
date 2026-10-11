@@ -45,9 +45,9 @@ int main(int argc, char *argv[]) {
             printf("             YOUR DATA\n");
             printf("------------------------------------------------------------\n");
             printf(" Your progress is automatically saved in:\n");
-            printf(" • tasks.txt → Your tasks\n");
-            printf(" • habits.txt → Your habits\n");
-            printf(" • habit_log.txt → Your habit history\n\n");
+            printf(" # tasks.txt → Your tasks\n");
+            printf(" # habits.txt → Your habits\n");
+            printf(" # habit_log.txt → Your habit history\n\n");
             return 0;
         }
         else if (strcmp(argv[1], "--report") == 0) {
@@ -147,8 +147,7 @@ void dashboard() {
         printf("5. Delete Task\n");
         printf("6. Daily Habits dashboard\n");
         printf("7. Show Calendar\n");
-        printf("8. Export tasks to HTML\n");
-        printf("9. Exit\n");
+        printf("8. Exit\n");
         printf("=====================================\n");
         printf("Enter your choice: ");
 
@@ -203,12 +202,6 @@ void dashboard() {
                 break;
             }
             case 8:
-                exportTasksToHTML();
-                printf("Press Enter to continue...");
-                clearInputBuffer();
-                getchar();
-                break;
-            case 9:
                 printf("\nThank you for using Task Manager!\n");
                 free(tasks);
                 exit(0);

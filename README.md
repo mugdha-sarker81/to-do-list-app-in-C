@@ -1,4 +1,4 @@
-# Task Manager & Daily Habit Tracker
+﻿# Task Manager & Daily Habit Tracker
 
 A feature-rich C application for managing daily tasks, tracking habits, reviewing progress, and planning work visually. It combines task organization, priority-based scheduling, habit streak analytics, and report generation into a single command-line productivity dashboard.
 

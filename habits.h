@@ -14,11 +14,11 @@
 typedef struct {
     int id;
     char name[60];
-    char time[6];   // HH:MM
+    char time[6];   
 } Habit;
 
 typedef struct {
-    char date[11];  // YYYY-MM-DD
+    char date[11];  
     int habitId;
     int completed;
 } HabitLog;

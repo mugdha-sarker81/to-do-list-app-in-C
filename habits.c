@@ -15,7 +15,7 @@ void getString(char *s, int size){
 
 int validTime(char *t){
     int h, m;
-    return strlen(t)==5 && t[2]==':' && sscanf(t,"%2d:%2d",&h,&m)==2 && h>=0 && h<=23 && m>=0 && m<=59;
+    return (strlen(t)==5 && t[2]==':') && sscanf(t,"%2d:%2d",&h,&m)==2 && (h>=0 && h<=23 && m>=0 && m<=59);
 }
 
 void getToday(char *out){
@@ -26,8 +26,9 @@ void getToday(char *out){
 void loadHabits(){
     FILE *fp = fopen("habits.txt", "r");
     if (!fp) return;
-    while (habitCount < MAX_HABITS && fscanf(fp, "%d|%59[^|]|%5[^\n]\n",
+    while(habitCount < MAX_HABITS && fscanf(fp, "%d|%59[^|]|%5[^\n]\n",
            &habits[habitCount].id, habits[habitCount].name, habits[habitCount].time) == 3)
+
         habitCount++;
     fclose(fp);
 }
@@ -35,37 +36,46 @@ void loadHabits(){
 void saveHabits(){
     FILE *fp = fopen("habits.txt", "w");
     if (!fp) { printf("Could not save habits.\n"); return; }
+
     for (int i = 0; i < habitCount; i++)
         fprintf(fp, "%d|%s|%s\n", habits[i].id, habits[i].name, habits[i].time);
+         
     fclose(fp);
 }
 
 void loadLogs(){
     FILE *fp = fopen("habit_log.txt", "r");
     if (!fp) return;
-    while (logCount < MAX_LOGS && fscanf(fp, "%10[^|]|%d|%d\n",
-           logs[logCount].date, &logs[logCount].habitId, &logs[logCount].completed) == 3)
+
+    while(logCount < MAX_LOGS && fscanf(fp,"%10[^|]|%d|%d\n",logs[logCount].date,
+                                    &logs[logCount].habitId,&logs[logCount].completed)==3)
+
         logCount++;
+
     fclose(fp);
 }
 
 void saveLogs(){
     FILE *fp = fopen("habit_log.txt", "w");
     if (!fp) { printf("Could not save logs.\n"); return; }
-    for (int i = 0; i < logCount; i++)
+
+    for(int i = 0; i < logCount; i++)
         fprintf(fp, "%s|%d|%d\n", logs[i].date, logs[i].habitId, logs[i].completed);
+
     fclose(fp);
 }
 
 int findHabit(int id){
     for (int i = 0; i < habitCount; i++)
         if (habits[i].id == id) return i;
+
     return -1;
 }
 
 int findLog(char *date, int habitId){
     for (int i = 0; i < logCount; i++)
         if (logs[i].habitId == habitId && strcmp(logs[i].date, date) == 0) return i;
+
     return -1;
 }
 
@@ -77,7 +87,7 @@ int isCompleted(char *date, int habitId){
 void sortHabitsByTime(){
     for (int i = 0; i < habitCount - 1; i++)
         for (int j = 0; j < habitCount - i - 1; j++)
-            if (strcmp(habits[j].time, habits[j + 1].time) > 0) {
+            if (strcmp(habits[j].time, habits[j + 1].time) > 0){
                 Habit tmp = habits[j];
                 habits[j] = habits[j + 1];
                 habits[j + 1] = tmp;
@@ -90,19 +100,19 @@ void addHabit(){
         return;
     }
 
-    Habit h;
-    h.id = 1;
+    Habit h;  h.id = 1;
     for (int i = 0; i < habitCount; i++)
         if (habits[i].id >= h.id) h.id = habits[i].id + 1;
 
     printf("\nHabit name: ");
     getString(h.name, sizeof(h.name));
+
     if (strlen(h.name) == 0) { printf("Name cannot be empty.\n"); return; }
 
-    do {
+    do{
         printf("Time (HH:MM): ");
         getString(h.time, sizeof(h.time));
-    } while (!validTime(h.time) && printf("Invalid time, e.g. 07:30\n"));
+    }while (!validTime(h.time) && printf("Invalid time, e.g. 07:30\n"));
 
     habits[habitCount++] = h;
     sortHabitsByTime();
@@ -123,16 +133,14 @@ void deleteHabit(int id){
 
 void showToday(){
     clearScreen();
-    char today[11];
-    getToday(today);
+    char today[11];   getToday(today);
     printf("\n===== %s =====\n", today);
 
     if (habitCount == 0) { printf("No habits yet.\n"); return; }
 
     for (int i = 0; i < habitCount; i++)
-        printf("%d. [%c] %s - %s\n", habits[i].id,
-               isCompleted(today, habits[i].id) ? 'X' : ' ',
-               habits[i].time, habits[i].name);
+        printf("%d. [%c] %s - %s\n", habits[i].id, isCompleted(today, habits[i].id) ? 'X' : ' ',
+                                     habits[i].time, habits[i].name);
 
     printf("====================\n");
 }
@@ -146,6 +154,7 @@ void toggleHabit(int id){
     int idx = findLog(today, id);
     if (idx == -1) {
         if (logCount >= MAX_LOGS) { printf("Log storage full.\n"); return; }
+
         strcpy(logs[logCount].date, today);
         logs[logCount].habitId = id;
         logs[logCount].completed = 1;
@@ -176,8 +185,10 @@ void timeToDate(time_t v, char *out){
 int dayQualifies(char *date){
     if (habitCount == 0) return 0;
     int completed = 0;
+
     for (int i = 0; i < habitCount; i++)
         if (isCompleted(date, habits[i].id)) completed++;
+
     return completed * 100 >= habitCount * 80;
 }
 
@@ -226,8 +237,7 @@ void showPerformance(){
 
     for (int i = 0; i < habitCount; i++){
         int rate = habitCompletionRate(habits[i].id, TREND_DAYS);
-        printf("%-20s %3d%%  %s\n", habits[i].name, rate,
-               rate < IGNORED_THRESHOLD ? "<- ignoring" : "");
+        printf("%-20s %3d%%  %s\n", habits[i].name, rate, rate < IGNORED_THRESHOLD ? "<- ignoring" : "");
     }
 
     printf("\nNeglected habits:\n");

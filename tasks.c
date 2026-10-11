@@ -100,7 +100,9 @@ void addTask() {
 
     if (taskCount >= taskCapacity) {
         taskCapacity = (taskCapacity == 0) ? INITIAL_CAPACITY : taskCapacity * 2;
+
         struct Task *newTasks = (struct Task *)realloc(tasks, taskCapacity * sizeof(struct Task));
+        
         if (!newTasks) {
             printf("Memory allocation failed! Cannot add more tasks.\n");
             return;
