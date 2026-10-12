@@ -17,5 +17,10 @@ habits.txt
 habit_log.txt
 /report.html
 
+# Keep the fictional demo dataset versioned while ignoring runtime data
+!/sample-data/tasks.txt
+!/sample-data/habits.txt
+!/sample-data/habit_log.txt
+
 # OS files
 .DS_Store

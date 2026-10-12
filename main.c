@@ -147,7 +147,8 @@ void dashboard() {
         printf("5. Delete Task\n");
         printf("6. Daily Habits dashboard\n");
         printf("7. Show Calendar\n");
-        printf("8. Exit\n");
+        printf("8. export to HTML report\n");
+        printf("9. Exit\n");
         printf("=====================================\n");
         printf("Enter your choice: ");
 
@@ -201,7 +202,30 @@ void dashboard() {
                 }
                 break;
             }
-            case 8:
+            case 8: {
+                if (exportTasksToHTML() != 0) {
+                    fprintf(stderr, "Could not generate the task report.\n");
+                    break;
+                }
+
+#ifdef _WIN32
+                const char *openCommand = "start \"\" \"report.html\"";
+#elif defined(__APPLE__)
+                const char *openCommand = "open \"report.html\"";
+#else
+                const char *openCommand = "xdg-open \"report.html\"";
+#endif
+
+                if (system(openCommand) != 0) {
+                    fprintf(stderr, "Report created, but could not open it. "
+                            "Open report.html manually.\n");
+                    break;
+                }
+
+                printf("Report created and opened: report.html\n");
+                break;
+            }
+            case 9:
                 printf("\nThank you for using Task Manager!\n");
                 free(tasks);
                 exit(0);
